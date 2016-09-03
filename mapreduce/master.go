@@ -81,16 +81,14 @@ func (master *Master) handleFailingWorkers() {
 	// YOUR CODE GOES HERE //
 	/////////////////////////
 
-	//
-
 	for failedWorker := range master.failedWorkerChan {
-	log.Printf("Deleting failed Worker with ID = '%v'.\n", failedWorker.id)
-       master.workersMutex.Lock()
-       delete(master.workers, failedWorker.id)
-       master.totalWorkers--
-       master.workersMutex.Unlock()
-       log.Printf("Failed Worker (ID = %v) has deleted.\n", failedWorker.id)
-   }
+		log.Printf("Deleting failed Worker with ID = '%v'.\n", failedWorker.id)
+		master.workersMutex.Lock()
+		delete(master.workers, failedWorker.id)
+		master.totalWorkers--
+		master.workersMutex.Unlock()
+		log.Printf("Failed Worker (ID = %v) has deleted.\n", failedWorker.id)
+	}
 }
 
 // Handle a single connection until it's done, then closes it.
