@@ -81,6 +81,8 @@ func (master *Master) handleFailingWorkers() {
 	// YOUR CODE GOES HERE //
 	/////////////////////////
 
+	//
+
 	for failedWorker := range master.failedWorkerChan {
 	log.Printf("Deleting failed Worker with ID = '%v'.\n", failedWorker.id)
        master.workersMutex.Lock()
