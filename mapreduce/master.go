@@ -1,4 +1,4 @@
-package mapreduce
+﻿package mapreduce
 
 import (
 	"log"
@@ -33,6 +33,8 @@ type Master struct {
 	// ADD EXTRA PROPERTIES HERE //
 	///////////////////////////////
 	// Fault Tolerance
+
+	
 }
 
 type Operation struct {
@@ -81,14 +83,22 @@ func (master *Master) handleFailingWorkers() {
 	// YOUR CODE GOES HERE //
 	/////////////////////////
 
+	///////////
+	// INÍCIO DA MUDANÇA!!
+	///////////
+
 	for failedWorker := range master.failedWorkerChan {
-		log.Printf("Deleting failed Worker with ID = '%v'.\n", failedWorker.id)
 		master.workersMutex.Lock()
+		log.Printf("Removing worker %v from master list.\n", failedWorker.id)
 		delete(master.workers, failedWorker.id)
-		master.totalWorkers--
 		master.workersMutex.Unlock()
-		log.Printf("Failed Worker (ID = %v) has deleted.\n", failedWorker.id)
+		log.Printf("Worker %v has removed from master list.\n", failedWorker.id)
 	}
+
+	///////////
+	// FIM DA MUDANÇA!!
+	///////////
+
 }
 
 // Handle a single connection until it's done, then closes it.

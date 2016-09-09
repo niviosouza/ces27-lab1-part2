@@ -58,6 +58,19 @@ func (master *Master) runOperation(remoteWorker *RemoteWorker, operation *Operat
 		log.Printf("Operation %v '%v' Failed. Error: %v\n", operation.proc, operation.id, err)
 		wg.Done()
 		master.failedWorkerChan <- remoteWorker
+
+		///////////
+		// INÍCIO DA MUDANÇA!!
+		///////////
+
+		log.Printf("Worker %v is changing to idle worker to recover failure.\n", operation.id)
+		wg.Add(1)
+		go master.runOperation(<-master.idleWorkerChan, operation, wg)
+
+		///////////
+		// FIM DA MUDANÇA!!
+		///////////
+
 	} else {
 		wg.Done()
 		master.idleWorkerChan <- remoteWorker
