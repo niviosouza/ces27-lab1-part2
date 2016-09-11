@@ -1,4 +1,4 @@
-package mapreduce
+﻿package mapreduce
 
 import (
 	"log"
@@ -56,7 +56,7 @@ func (master *Master) runOperation(remoteWorker *RemoteWorker, operation *Operat
 
 	if err != nil {
 		log.Printf("Operation %v '%v' Failed. Error: %v\n", operation.proc, operation.id, err)
-		wg.Done()
+		//wg.Done()
 		master.failedWorkerChan <- remoteWorker
 
 		///////////
@@ -64,7 +64,7 @@ func (master *Master) runOperation(remoteWorker *RemoteWorker, operation *Operat
 		///////////
 
 		log.Printf("Worker %v is changing to idle worker to recover failure.\n", operation.id)
-		wg.Add(1)
+		//wg.Add(1)
 		go master.runOperation(<-master.idleWorkerChan, operation, wg)
 
 		///////////
